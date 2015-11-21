@@ -75,6 +75,6 @@ public abstract class Conta implements Serializable{
 		return transacoes;
 	}
 	
-	
-	
+	public abstract boolean saque(BigDecimal valor);
+	public abstract boolean deposito(BigDecimal valor);
 }
