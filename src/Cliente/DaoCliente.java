@@ -6,13 +6,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import Conta.Conta;
+import Exception.NoKeyException;
 
 public class DaoCliente{
 
@@ -21,99 +19,23 @@ public class DaoCliente{
 	**/
 	
 	private static Map<String, Cliente> listaClientes;
-
-	public DaoCliente() {
+	private static DaoCliente daoCliente;
+	
+	private DaoCliente() {
 		listaClientes = criaMap();
 	}
-
-	public Cliente clienteFisicoMenorSaldo(){
-		Cliente temp=null;
-		BigDecimal menorSaldo = null;
-		for (String key : listaClientes.keySet()) {
-			BigDecimal saldoConta = new BigDecimal("0.0");
-			if (listaClientes.get(key) instanceof PessoaFisica){
-				for (Conta conta : listaClientes.get(key).getContasVinculadas()) {
-					saldoConta=saldoConta.add(conta.getSaldoAtual());
-				}
-				if(menorSaldo == null){
-					menorSaldo = saldoConta;
-				    temp = (PessoaFisica) listaClientes.get(key);
-				}
-				if (saldoConta.compareTo(menorSaldo) == -1){
-					menorSaldo=saldoConta;
-					temp =  (PessoaFisica) listaClientes.get(key);
-				}
-			}
-			
+	
+	public Integer tamanho(){
+		return listaClientes.size();
+	}
+	
+	public static DaoCliente getInstance(){
+		if (daoCliente == null){
+			daoCliente = new DaoCliente();
 		}
-		return temp;
+		return daoCliente;
 	}
-	
-	public Cliente clienteJuridicoMenorSaldo(){
-		Cliente temp=null;
-		BigDecimal menorSaldo = null;
-		for (String key : listaClientes.keySet()) {
-			BigDecimal saldoConta = new BigDecimal("0.0");
-			if (listaClientes.get(key) instanceof PessoaJuridica){
-				for (Conta conta : listaClientes.get(key).getContasVinculadas()) {
-					saldoConta = saldoConta.add(conta.getSaldoAtual());
-				}
-				if (menorSaldo == null) {
-					menorSaldo = saldoConta;
-					temp = (PessoaJuridica) listaClientes.get(key);
-				}	
-				if (saldoConta.compareTo(menorSaldo)==-1){
-					menorSaldo = saldoConta;
-					temp = (PessoaJuridica) listaClientes.get(key);
-				}
-			}
-			
-		}return temp;
-	}
-	
-	public Cliente clienteJuridicoMaiorSaldo(){
-		Cliente temp=null;
-		BigDecimal maiorSaldo = null;
-		for (String key : listaClientes.keySet()) {
-			BigDecimal saldoConta = new BigDecimal("0.0");
-			if (listaClientes.get(key) instanceof PessoaJuridica){
-				for (Conta conta : listaClientes.get(key).getContasVinculadas()) {
-					saldoConta = saldoConta.add(conta.getSaldoAtual());
-				}
-				if (maiorSaldo == null){
-					maiorSaldo = saldoConta;
-				 	temp = (PessoaJuridica) listaClientes.get(key);
-				}	
-				if (saldoConta.compareTo(maiorSaldo)==1){
-					maiorSaldo = saldoConta;
-					temp = (PessoaJuridica) listaClientes.get(key);
-				}
-			}
-			
-		}return temp;
-	}
-	
-	public Cliente clienteFisicoMaiorSaldo(){
-		Cliente temp=null;
-		BigDecimal maiorSaldo = null;
-		for (String key : listaClientes.keySet()) {
-			BigDecimal saldoConta = new BigDecimal("0.0");
-			if (listaClientes.get(key) instanceof PessoaFisica){
-				for (Conta conta : listaClientes.get(key).getContasVinculadas()) {
-					saldoConta = saldoConta.add(conta.getSaldoAtual());
-				}
-				if (maiorSaldo == null){
-					maiorSaldo = saldoConta;
-					temp = (PessoaFisica) listaClientes.get(key);
-				}
-				if (saldoConta.compareTo(maiorSaldo) == 1){
-					maiorSaldo = saldoConta;
-					temp = (PessoaFisica) listaClientes.get(key);
-				}
-			}
-			
-		}return temp;
-	}
+
 	//Metodo pra cadastrar novo cliente
 	public boolean cadastrarCliente(String nome, String endereco, String cep, String telefone,BigDecimal renda, String cpf, String cnpj, String rg) throws IOException, NoKeyException {
 		Cliente cliente = criaCliente(nome, endereco, cep, telefone, renda, cpf, cnpj, rg);
@@ -128,11 +50,6 @@ public class DaoCliente{
 		}return false;
 	}
 
-	//Metodo para modificar as contas de algum cliente
-	public List<Conta> getContasCliente(String key){
-		return listaClientes.get(key).getContasVinculadas();
-	}
-	
 	//Metodo pra visualizar cliente
 	public Cliente consultarCliente(String string) {
 		if (!listaClientes.containsKey(string)) {
@@ -144,7 +61,7 @@ public class DaoCliente{
 	//...
 	public boolean alterarCliente(String nome, String endereco, String cep, String telefone,BigDecimal renda, String cpf, String cnpj, String rg) throws IOException, NoKeyException {
 		String key;
-		if((cpf == null || cpf.equals(""))&& (cnpj != null || !cnpj.equals("")))
+		if((cpf == null || cpf.equals("")) && (cnpj != null || !cnpj.equals("")))
 			key = cnpj;
 		else if((cnpj == null || cnpj.equals(""))&& (cpf != null || !cpf.equals("")))
 			key = cpf;
@@ -171,8 +88,15 @@ public class DaoCliente{
 		}
 	}
 	
-	public boolean vincularConta(String cliente, Conta conta){
-		return this.listaClientes.get(cliente).getContasVinculadas().add(conta);
+	public boolean verificaCliente(String cliente){
+		if (listaClientes.containsKey(cliente)) 
+			return true;
+		return false;
+	}
+	
+	public void vinculaConta(String cliente, Integer conta){
+		this.listaClientes.get(cliente).getContasVinculadas().add(conta);
+		this.salvaDados();
 	}
 
 	//Não meche em nada daqui pra baixo tambem
@@ -187,7 +111,7 @@ public class DaoCliente{
 		}
 	}
 
-	public void salvaDados() {
+	private void salvaDados() {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("Clientes.cliente")));
 			oos.writeObject(listaClientes);

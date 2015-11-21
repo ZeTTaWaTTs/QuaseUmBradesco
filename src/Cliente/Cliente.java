@@ -9,11 +9,11 @@ import Conta.Conta;
 
 
 public abstract class Cliente implements Serializable{
-//tewste
+
 	private String nome,endereco,Cep,telefone;
 	private boolean situacao;
 	private BigDecimal renda;
-	private List<Conta> contasVinculadas;
+	private List<Integer> contasVinculadas;
 	
 	public Cliente(String nome, String endereco, String cep, String telefone,BigDecimal renda) {
 		this.nome = nome;
@@ -62,7 +62,7 @@ public abstract class Cliente implements Serializable{
 		this.renda = renda;
 	}
 
-	public List<Conta> getContasVinculadas() {
+	public List<Integer> getContasVinculadas() {
 		return this.contasVinculadas;
 	}
 		
