@@ -9,13 +9,13 @@ public class ListaMovimentos {
 	
 	
 	
-	public void addMoveInP (int posicao, Registro move){
+	public void addMoveInP (int posicao, Object move){
 		
 	}
 	
 	
 	//ADICIONA na PRIMEIRA POSIÇÃO
-	public void addInFirst (Registro move){
+	public void addInFirst (Object move){
 		Nó newMove = new Nó(move);
 		
 		if(isEmpty()){
@@ -30,7 +30,7 @@ public class ListaMovimentos {
 	}
 	
 	//ADICIONA na ULTIMA POSIÇÃO
-	public void addInLast (Registro move){
+	public void addInLast (Object move){
 		Nó newMove = new Nó(move);
 		
 			if(isEmpty()){
