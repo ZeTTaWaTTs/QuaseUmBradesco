@@ -1,30 +1,30 @@
 package Conta.Registros;
 
 
-public class Nó {
+public class No {
 
-	private Nó next, prev;
+	private No next, prev;
 	private Object move;
 	
-	public Nó (Object move){
+	public No (Object move){
 		this.move = move;
 		next = null;
 		prev = null;
 	}
 
-	public Nó getNext() {
+	public No getNext() {
 		return next;
 	}
 
-	public void setNext(Nó prox) {
+	public void setNext(No prox) {
 		this.next = prox;
 	}
 
-	public Nó getPrev() {
+	public No getPrev() {
 		return prev;
 	}
 
-	public void setPrev(Nó prev) {
+	public void setPrev(No prev) {
 		this.prev = prev;
 	}
 	

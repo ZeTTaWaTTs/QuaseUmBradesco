@@ -3,8 +3,8 @@ package Conta.Registros;
 public class ListaMovimentos {
 
 	
-	private Nó Firstmove = null;
-	private Nó Lastmove = null;
+	private No Firstmove = null;
+	private No Lastmove = null;
 	private int size = 0;
 	
 	
@@ -17,7 +17,7 @@ public class ListaMovimentos {
 	
 	//ADICIONA na PRIMEIRA POSIÇÃO
 	public void addInFirst (Object move){
-		Nó newMove = new Nó(move);
+		No newMove = new No(move);
 		
 		if(isEmpty()){
 			Firstmove = newMove;
@@ -32,7 +32,7 @@ public class ListaMovimentos {
 	
 	//ADICIONA na ULTIMA POSIÇÃO
 	public void addInLast (Object move){
-		Nó newMove = new Nó(move);
+		No newMove = new No(move);
 		
 			if(isEmpty()){
 				Firstmove = newMove;
@@ -54,7 +54,7 @@ public class ListaMovimentos {
 	public Object removeInFirst (){
 		if(isEmpty()) return null;
 		
-		Nó aux = Firstmove;
+		No aux = Firstmove;
 		
 		if(Firstmove.getNext() != null){
 			Firstmove = Firstmove.getNext();
@@ -72,7 +72,7 @@ public class ListaMovimentos {
 		public Object removeInLast (){
 			if(isEmpty()) return null;
 			
-			Nó aux = Firstmove;
+			No aux = Firstmove;
 			
 			if(Firstmove.getNext() != null){
 				Firstmove = Firstmove.getNext();
@@ -102,14 +102,14 @@ public class ListaMovimentos {
 	}
 	
 	//RETORNA o PRMEIRO MOVIMENTO da lista
-	public Nó getFirst()throws IllegalStateException{
+	public No getFirst()throws IllegalStateException{
 		if (isEmpty())
 			throw new IllegalStateException("A lista está Vazia!");
 		return Firstmove.getNext();
 	}
 	
 	//RETORNA o ULTIMO MOVIMENTO da lista
-	public Nó getLast(){
+	public No getLast(){
 		if (isEmpty())
 			throw new IllegalStateException("A lista está Vazia!");
 		return Lastmove.getPrev();
@@ -118,7 +118,7 @@ public class ListaMovimentos {
 	
 	/*RETORNA o movimento que ANTECEDE. Gera um erro se o movimento é a 
 	PRIMEIRA POSIÇAO*/
-	public Nó getNext(Nó Move)throws IllegalArgumentException{
+	public No getNext(No Move)throws IllegalArgumentException{
 		if (Move == Lastmove)
 			throw new IllegalArgumentException("Não possui um movimento anterior");
 		return Move.getNext();
@@ -127,7 +127,7 @@ public class ListaMovimentos {
 	
 	/*RETORNA o movimento PROCEDE. Gera um erro se o movimento é a 
 	uLTIMA POSIÇAO*/
-	public Nó getPrev(Nó Move)throws IllegalArgumentException{
+	public No getPrev(No Move)throws IllegalArgumentException{
 		if (Move == Firstmove)
 			throw new IllegalArgumentException("Não possui um movimento anterior");
 		return Move.getPrev();
