@@ -1,5 +1,8 @@
 package Conta;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -49,6 +52,7 @@ public abstract class Conta implements Serializable{
 
 	public void setSaldoAtual(BigDecimal saldoAtual) {
 		this.saldoAtual = saldoAtual;
+		//salvaSaldo();
 	}
 
 	public String getSenha() {
@@ -75,6 +79,23 @@ public abstract class Conta implements Serializable{
 		return transacoes;
 	}
 	
+	/*private void salvaSaldo() {
+		FileWriter arq;
+
+		try {
+			arq = new FileWriter(this.cliente+"."+this.id);
+			PrintWriter saldo = new PrintWriter(arq);
+			saldo.print(this.id+"\t Saldo : "+this.saldoAtual);
+			arq.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}*/
+	
 	public abstract boolean saque(BigDecimal valor);
 	public abstract boolean deposito(BigDecimal valor);
+	
 }
