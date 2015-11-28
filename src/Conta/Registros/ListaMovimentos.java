@@ -9,9 +9,10 @@ public class ListaMovimentos {
 	
 	
 	
-	public void addMoveInP (int posicao, Object move){
+	/*public void addMoveInP (int posicao, Object move){
+	 }
+	 */
 		
-	}
 	
 	
 	//ADICIONA na PRIMEIRA POSIÇÃO
@@ -44,10 +45,10 @@ public class ListaMovimentos {
 		size++;
 	}
 	
-	//REMOVE na posição X
+	/*REMOVE na posição X
 	public Object removeInPosition (int posicao){
 		return posicao;
-	}
+	}*/
 	
 	//REMOVE da PRIMEIRA posiçao
 	public Object removeInFirst (){
@@ -85,10 +86,10 @@ public class ListaMovimentos {
 			return aux.getMove();
 		}
 	
-	//RETORNA o movimento da 'X' POSIÇÃO
-	/*Implementar*/public Object getMove (int posicao){
+	/*RETORNA o movimento da 'X' POSIÇÃO
+	public Object getMove (int posicao){
 		return posicao;
-	}
+	}*/
 	
 	//RETORNA o TAMANHO
 	public int size (){
