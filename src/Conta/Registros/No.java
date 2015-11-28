@@ -32,7 +32,7 @@ public class No {
 		return move;
 	}
 
-	public void setMove(Registro move) {
+	public void setMove(Object move) {
 		this.move = move;
 	}
 }
