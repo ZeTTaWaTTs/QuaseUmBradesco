@@ -5,18 +5,17 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Movimento {
-	BigDecimal valor, jurosConstrutor;
+	BigDecimal valor, juros;
 	String operacao;
-	long conta;
 	LocalTime hora;
 	LocalDate data;
 
-	public Movimento(BigDecimal valor, String operacao, long conta,
-			LocalTime hora, LocalDate data) {
+	public Movimento(BigDecimal valor, String operacao, LocalTime hora,
+			LocalDate data) {
 
 		this.valor = valor;
 		this.operacao = operacao;
-		this.conta = conta;
+
 		this.hora = hora;
 		this.data = data;
 
@@ -26,13 +25,14 @@ public class Movimento {
 		return valor;
 	}
 
+	public BigDecimal getJuros() {
+		return juros;
+	}
+
 	public String getOperacao() {
 		return operacao;
 	}
 
-	public long getConta() {
-		return conta;
-	}
 
 	public LocalTime getHora() {
 		return hora;
