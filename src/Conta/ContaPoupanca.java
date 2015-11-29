@@ -20,7 +20,7 @@ public class ContaPoupanca extends Conta {
 	}
 
 	public void setRendimento(BigDecimal rendimento) {
-		this.rendimento = rendimento;
+		this.rendimento = this.rendimento.add(rendimento);
 	}
 
 	public BigDecimal[] getSaldo() {
@@ -73,8 +73,9 @@ public class ContaPoupanca extends Conta {
 
 		rendimento = this.saldo[hj.getDayOfMonth() - 1].multiply(juros);
 		setRendimento(rendimento);
-		return getRendimento();
+		return rendimento;
 	}
+	
 	@Override
 	public boolean deposito(BigDecimal valor) {
 		LocalDate hj = LocalDate.now();
@@ -88,6 +89,7 @@ public class ContaPoupanca extends Conta {
 			return true;
 		}
 	}
+	
 	@Override
 	public boolean saque(BigDecimal valor) {
 		if (valor.compareTo(new BigDecimal("0.1")) == -1) {
