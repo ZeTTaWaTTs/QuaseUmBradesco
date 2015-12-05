@@ -4,9 +4,9 @@ package Conta.Registros;
 public class No {
 
 	private No next, prev;
-	private Object move;
+	private Movimento move;
 	
-	public No (Object move){
+	public No (Movimento move){
 		this.move = move;
 		next = null;
 		prev = null;
@@ -28,11 +28,11 @@ public class No {
 		this.prev = prev;
 	}
 	
-	public Object getMove() {
+	public Movimento getMove() {
 		return move;
 	}
 
-	public void setMove(Object move) {
+	public void setMove(Movimento move) {
 		this.move = move;
 	}
 }
