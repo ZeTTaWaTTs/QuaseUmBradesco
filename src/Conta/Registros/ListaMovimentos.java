@@ -1,6 +1,10 @@
 package Conta.Registros;
 
-public class ListaMovimentos {
+import java.lang.annotation.Annotation;
+import java.lang.reflect.GenericDeclaration;
+import java.lang.reflect.TypeVariable;
+
+public class ListaMovimentos implements GenericDeclaration{
 
 	
 	private No Firstmove = null;
@@ -160,5 +164,29 @@ public class ListaMovimentos {
 		System.out.println("Ultimo: " + lista.getLast());
 
 		
+	}
+
+	@Override
+	public <T extends Annotation> T getAnnotation(Class<T> arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Annotation[] getAnnotations() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Annotation[] getDeclaredAnnotations() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TypeVariable<?>[] getTypeParameters() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
