@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
+import Conta.Registros.ListaMovimentos;
 import Conta.Registros.RegistraMovimento;
 
 public abstract class Conta implements Serializable{
@@ -17,7 +18,7 @@ public abstract class Conta implements Serializable{
 	private BigDecimal saldoAtual;
 	private LocalDate dataAbertura, dataEncerramento;
 	private boolean situacao;
-	private LinkedList<Registro> transacoes;
+	private ListaMovimentos<RegistraMovimento> transacoes;
 	
 	public Conta (Integer id, String senha, String cliente, BigDecimal saldoAtual){
 		this.id = id;
@@ -26,7 +27,7 @@ public abstract class Conta implements Serializable{
 		this.saldoAtual = saldoAtual;
 		this.dataAbertura = LocalDate.now();
 		this.situacao = true;
-		this.transacoes = new LinkedList<>();
+		this.transacoes = new ListaMovimentos();
 	}
 	
 	
@@ -75,7 +76,7 @@ public abstract class Conta implements Serializable{
 		return cliente;
 	}
 
-	public LinkedList<Registro> getTransacoes() {
+	public ListaMovimentos getTransacoes() {
 		return transacoes;
 	}
 	
