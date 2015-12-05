@@ -5,34 +5,31 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Movimento {
-	BigDecimal valor, juros;
+	int conta;
+	BigDecimal valor;
 	String operacao;
-	LocalTime hora;
-	LocalDate data;
+	private LocalDate data;
+	private LocalTime hora;
 
-	public Movimento(BigDecimal valor, String operacao, LocalTime hora,
-			LocalDate data) {
+	public Movimento(int conta, BigDecimal valor, String operacao
+			) {
 
 		this.valor = valor;
 		this.operacao = operacao;
-
-		this.hora = hora;
-		this.data = data;
-
+		this.hora = LocalTime.now();
+		this.data = LocalDate.now();
 	}
 
 	public BigDecimal getValor() {
 		return valor;
 	}
-
-	public BigDecimal getJuros() {
-		return juros;
+	public int  getConta() {
+		return conta;
 	}
 
 	public String getOperacao() {
 		return operacao;
 	}
-
 
 	public LocalTime getHora() {
 		return hora;
