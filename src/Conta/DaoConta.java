@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-import Conta.Registros.Registro;
+import Conta.Registros.RegistraMovimento;
 import Exception.NoKeyException;
 
 public class DaoConta {

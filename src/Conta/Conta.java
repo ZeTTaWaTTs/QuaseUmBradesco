@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
-import Conta.Registros.Registro;
+import Conta.Registros.RegistraMovimento;
 
 public abstract class Conta implements Serializable{
 

@@ -8,7 +8,7 @@ import Cliente.DaoCliente;
 import Conta.Conta;
 
 import Conta.DaoConta;
-import Conta.Registros.Registro;
+import Conta.Registros.RegistraMovimento;
 import Exception.InvalidOperationException;
 import Exception.NoKeyException;
 
