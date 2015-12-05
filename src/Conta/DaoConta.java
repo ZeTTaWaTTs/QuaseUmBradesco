@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+import Conta.Registros.ListaMovimentos;
+import Conta.Registros.Movimento;
 import Conta.Registros.RegistraMovimento;
 import Exception.NoKeyException;
 
@@ -86,22 +88,13 @@ public class DaoConta {
 
 		for (Integer chave : listaContas.keySet()) {
 			if (listaContas.get(chave) instanceof ContaPoupanca) {
-				/*
-				 * extratoRendimento(((ContaPoupanca) listaContas.get(chave))
-				 * .calculaRendimento(juros));
-				 */
+			
 				((ContaPoupanca) listaContas.get(chave))
 						.calculaRendimento(juros);
 			}
 		}
 
 	}
-
-	/*public BigDecimal extratoRendimento(BigDecimal rendimento) {
-
-		return rendimento;
-	}
-	*/
 
 	public boolean deposito(Conta conta, BigDecimal valor) {
 		if (conta instanceof ContaCorrente) {
@@ -139,7 +132,7 @@ public class DaoConta {
 		extrato.append("\tPeriodo: " + dtf.format(ini) + " até "
 				+ dtf.format(fim) + "\n\n");
 
-		LinkedList<Registro> transacoes = conta.getTransacoes();
+		ListaMovimentos<RegistraMovimento> transacoes = conta.getTransacoes();
 
 		if (conta.getSenha().equals(senha) == false)
 			return null;
@@ -149,7 +142,7 @@ public class DaoConta {
 			return extrato;
 		}
 
-		for (Registro registro : transacoes) {
+		for (Movimento registro : transacoes) {
 			if ((registro.getData().isAfter(ini) || registro.getData().isEqual(
 					ini))
 					&& (registro.getData().isBefore(fim) || registro.getData()
@@ -199,7 +192,7 @@ public class DaoConta {
 		if (limite.doubleValue() > 0 && juros.doubleValue() <= 0) {
 			return new ContaEspecial(id, senha, cliente, saldoAtual, limite);
 		} else if (juros.doubleValue() > 0 && limite.doubleValue() <= 0) {
-			return new ContaPoupanca(id, senha, cliente, juros);
+			return new ContaPoupanca(id, senha, cliente);
 		} else if (limite.doubleValue() == 0 && juros.doubleValue() == 0) {
 			return new ContaCorrente(id, senha, cliente, saldoAtual);
 		}
@@ -240,17 +233,16 @@ public class DaoConta {
 		}
 	}
 
-	public void getSaldoContaTxt(Integer numeroConta, String cliente){
+	public void salvaSaldoContaTxt(Integer numeroConta, String cliente, BigDecimal saldo){
 		try {
-			FileReader arq = new FileReader(cliente+"."+numeroConta);
-			BufferedReader lerArq = new BufferedReader(arq);
 			
-			String linha = lerArq.readLine();
-			 while (linha != null){
-				 System.out.println(linha);
-				 linha = lerArq.readLine();
-			 }
-			 arq.close();
+			FileWriter arq = new FileWriter(cliente+"."+numeroConta+"."+".txt"); 
+			PrintWriter grava = new PrintWriter(arq);
+			
+			grava.println("Conta: "+numeroConta);
+			grava.println("Cliente"+cliente);
+			grava.println("Saldo: "+saldo);
+			arq.close();
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

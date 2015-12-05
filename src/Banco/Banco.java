@@ -13,7 +13,8 @@ import Exception.InvalidOperationException;
 import Exception.NoKeyException;
 
 public class Banco {
-
+	
+	///método vereificar senha	
 	private DaoCliente daoCliente;
 	private DaoConta daoConta;
 

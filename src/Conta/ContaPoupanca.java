@@ -5,22 +5,21 @@ import java.time.LocalDate;
 
 public class ContaPoupanca extends Conta {
 
-	private BigDecimal rendimento;
+	private BigDecimal rendimento[];
 	private BigDecimal saldo[];
 
-	public ContaPoupanca(int id, String senha, String cliente,
-			BigDecimal rendimento) {
+	public ContaPoupanca(int id, String senha, String cliente) {
 		super(id, senha, cliente);
-		this.rendimento = rendimento;
 		this.saldo = inicializaVetor();
+		this.rendimento = inicializaVetor();
 	}
 
-	public BigDecimal getRendimento() {
+	public BigDecimal[] getRendimento() {
 		return rendimento;
 	}
 
-	public void setRendimento(BigDecimal rendimento) {
-		this.rendimento = this.rendimento.add(rendimento);
+	public void setRendimento(BigDecimal[] rendimento) {
+		this.rendimento = rendimento;
 	}
 
 	public BigDecimal[] getSaldo() {
@@ -48,7 +47,7 @@ public class ContaPoupanca extends Conta {
 		}
 	}
 
-	public BigDecimal saldoAtualP() {// analisa aqui porra
+	public BigDecimal saldoAtualP() {
 
 		BigDecimal soma = new BigDecimal("0");
 
@@ -67,13 +66,14 @@ public class ContaPoupanca extends Conta {
 		return vetor;
 	}
 
-	public BigDecimal calculaRendimento(BigDecimal juros) {
+	public void calculaRendimento(BigDecimal juros) {
 		BigDecimal rendimento = null;
 		LocalDate hj = LocalDate.now();
-
+		BigDecimal rend[] = this.rendimento;
 		rendimento = this.saldo[hj.getDayOfMonth() - 1].multiply(juros);
-		setRendimento(rendimento);
-		return rendimento;
+		rend[hj.getDayOfMonth()-1] = rendimento;
+		setRendimento(rend);
+		
 	}
 	
 	@Override

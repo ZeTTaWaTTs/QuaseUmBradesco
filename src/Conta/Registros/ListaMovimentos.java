@@ -1,6 +1,8 @@
 package Conta.Registros;
 
-public class ListaMovimentos<Tipo> {
+import java.util.Iterator;
+
+public class ListaMovimentos<Tipo>{
 	private No Firstmove = null;
 	private No Lastmove = null;
 	private int size = 0;
@@ -161,4 +163,5 @@ public class ListaMovimentos<Tipo> {
 
 	}
 */
+
 }

@@ -1,15 +1,9 @@
 package Conta;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.LinkedList;
-
 import Conta.Registros.ListaMovimentos;
-import Conta.Registros.RegistraMovimento;
 
 public abstract class Conta implements Serializable{
 
@@ -18,7 +12,7 @@ public abstract class Conta implements Serializable{
 	private BigDecimal saldoAtual;
 	private LocalDate dataAbertura, dataEncerramento;
 	private boolean situacao;
-	private ListaMovimentos<RegistraMovimento> transacoes;
+	private ListaMovimentos transacoes;
 	
 	public Conta (Integer id, String senha, String cliente, BigDecimal saldoAtual){
 		this.id = id;
@@ -38,7 +32,7 @@ public abstract class Conta implements Serializable{
 		this.cliente = cliente;
 		this.dataAbertura = LocalDate.now();
 		this.situacao = true;
-		this.transacoes = new LinkedList<>();
+		this.transacoes = new ListaMovimentos();
 	}
 
 
@@ -80,21 +74,6 @@ public abstract class Conta implements Serializable{
 		return transacoes;
 	}
 	
-	/*private void salvaSaldo() {
-		FileWriter arq;
-
-		try {
-			arq = new FileWriter(this.cliente+"."+this.id);
-			PrintWriter saldo = new PrintWriter(arq);
-			saldo.print(this.id+"\t Saldo : "+this.saldoAtual);
-			arq.close();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}*/
 	
 	public abstract boolean saque(BigDecimal valor);
 	public abstract boolean deposito(BigDecimal valor);
