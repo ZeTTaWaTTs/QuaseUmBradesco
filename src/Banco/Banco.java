@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import Cliente.DaoCliente;
 import Conta.Conta;
 import Conta.DaoConta;
@@ -64,9 +66,22 @@ public class Banco {
 	}
 
 	public void retornaSaldoTxt(Integer numeroConta, String senha){
+		if(daoConta.validaSenha(numeroConta, senha)){
 		daoConta.getSaldoContaTxt(numeroConta);
+		}else{
+			JOptionPane.showMessageDialog(null, "Senha incorreta");
+		}
 	}
-	
+
+	public BigDecimal getSaldoConta(Integer numeroConta, String senha){
+		try {
+			return daoConta.getSaldoConta(numeroConta, senha);
+		} catch (NoKeyException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Erro:"+ e.getMessage());
+			return null;
+		}
+	}
 	
 	
 	

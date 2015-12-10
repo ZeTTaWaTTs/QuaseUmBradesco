@@ -86,7 +86,7 @@ public class DaoConta {
 		return null;
 	}
 
-	public void rendimento(BigDecimal juros) {
+	public void rendimento(BigDecimal juros) {// !!!!!!!!!!!!!!!!talvez lance uma exceção ConcurrentModificationException!!!!!!!!!!!!!!!
 
 		for (Integer chave : listaContas.keySet()) {
 			if (listaContas.get(chave) instanceof ContaPoupanca) {
@@ -102,11 +102,18 @@ public class DaoConta {
 		Conta conta = listaContas.get(numeroConta);
 		if (validaSenha(numeroConta, senha)) {
 			if (conta instanceof ContaCorrente) {
-				return ((ContaCorrente) conta).deposito(valor);
+				((ContaCorrente) conta).deposito(valor);
+				salvaSaldoContaTxt(numeroConta);
+				return true;
+				
 			} else if (conta instanceof ContaEspecial) {
-				return ((ContaEspecial) conta).deposito(valor);
+				((ContaEspecial) conta).deposito(valor);
+				salvaSaldoContaTxt(numeroConta);
+				return true;
 			} else {
-				return ((ContaPoupanca) conta).deposito(valor);
+				((ContaPoupanca) conta).deposito(valor);
+				salvaSaldoContaTxt(numeroConta);
+				return true;
 			}
 		} else {
 			return false;
