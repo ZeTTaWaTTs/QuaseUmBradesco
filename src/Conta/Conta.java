@@ -6,7 +6,8 @@ import java.time.LocalDate;
 import Conta.Registros.ListaMovimentos;
 
 public abstract class Conta implements Serializable{
-
+//lista vai na dao. pq é uma unica instanccia.
+	//
 	private Integer id;
 	private String senha, cliente;
 	private BigDecimal saldoAtual;

@@ -6,7 +6,6 @@ import java.util.List;
 
 import Cliente.DaoCliente;
 import Conta.Conta;
-
 import Conta.DaoConta;
 import Conta.Registros.RegistraMovimento;
 import Exception.InvalidOperationException;
@@ -28,13 +27,13 @@ public class Banco {
 
 	}
 
-	public boolean deposito(Conta conta, BigDecimal valor) {
-		return daoConta.deposito(conta, valor);
+	public boolean deposito(BigDecimal valor, String senha, Integer numeroConta) {
+		return daoConta.deposito(valor, senha, numeroConta);
 
 	}
 
-	public boolean saque(Conta conta, BigDecimal valor) {
-		return daoConta.saque(conta, valor);
+	public boolean saque(BigDecimal valor, String senha, Integer numeroConta) {
+		return daoConta.saque(valor, senha, numeroConta);
 	}
 
 	public boolean abrirConta(String senha, String cliente,
@@ -64,8 +63,8 @@ public class Banco {
 		return true;
 	}
 
-	public void retornaSaldoTxt(Integer numeroConta, String cliente){
-		daoConta.getSaldoContaTxt(numeroConta, cliente);
+	public void retornaSaldoTxt(Integer numeroConta, String senha){
+		daoConta.getSaldoContaTxt(numeroConta);
 	}
 	
 	

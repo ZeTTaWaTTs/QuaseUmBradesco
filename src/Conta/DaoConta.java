@@ -54,10 +54,10 @@ public class DaoConta {
 
 	public boolean excluiConta(Integer numeroConta, String senha)
 			throws NoKeyException {
-		if (this.listaContas.containsKey(senha) == false)
+		if (this.listaContas.containsKey(numeroConta) == false)
 			throw new NoKeyException();
 		Conta conta = this.listaContas.get(numeroConta);
-		if (conta.getSenha().equals(senha)
+		if (validaSenha(numeroConta, senha)
 				&& conta.getSaldoAtual().doubleValue() <= 0.0) {
 			this.listaContas.remove(numeroConta);
 			salvaListaContas();
@@ -78,9 +78,11 @@ public class DaoConta {
 		if (listaContas.containsKey(numeroConta) == false)
 			throw new NoKeyException();
 
-		Conta conta = this.listaContas.get(numeroConta);
-		if (conta.getSenha().equals(senha))
+		if (validaSenha(numeroConta, senha)) {
+			Conta conta = this.listaContas.get(numeroConta);
+
 			return conta.getSaldoAtual();
+		}
 		return null;
 	}
 
@@ -88,7 +90,7 @@ public class DaoConta {
 
 		for (Integer chave : listaContas.keySet()) {
 			if (listaContas.get(chave) instanceof ContaPoupanca) {
-			
+
 				((ContaPoupanca) listaContas.get(chave))
 						.calculaRendimento(juros);
 			}
@@ -96,24 +98,33 @@ public class DaoConta {
 
 	}
 
-	public boolean deposito(Conta conta, BigDecimal valor) {
-		if (conta instanceof ContaCorrente) {
-			return ((ContaCorrente) conta).deposito(valor);
-		} else if (conta instanceof ContaEspecial) {
-			return ((ContaEspecial) conta).deposito(valor);
+	public boolean deposito(BigDecimal valor, String senha, Integer numeroConta) {
+		Conta conta = listaContas.get(numeroConta);
+		if (validaSenha(numeroConta, senha)) {
+			if (conta instanceof ContaCorrente) {
+				return ((ContaCorrente) conta).deposito(valor);
+			} else if (conta instanceof ContaEspecial) {
+				return ((ContaEspecial) conta).deposito(valor);
+			} else {
+				return ((ContaPoupanca) conta).deposito(valor);
+			}
 		} else {
-			return ((ContaPoupanca) conta).deposito(valor);
+			return false;
 		}
-
 	}
 
-	public boolean saque(Conta conta, BigDecimal valor) {
-		if (conta instanceof ContaCorrente) {
-			return ((ContaCorrente) conta).saque(valor);
-		} else if (conta instanceof ContaEspecial) {
-			return ((ContaEspecial) conta).saque(valor);
+	public boolean saque(BigDecimal valor, String senha, Integer numeroConta) {
+		Conta conta = listaContas.get(numeroConta);
+		if (validaSenha(numeroConta, senha)) {
+			if (conta instanceof ContaCorrente) {
+				return ((ContaCorrente) conta).saque(valor);
+			} else if (conta instanceof ContaEspecial) {
+				return ((ContaEspecial) conta).saque(valor);
+			} else {
+				return ((ContaPoupanca) conta).saque(valor);
+			}
 		} else {
-			return ((ContaPoupanca) conta).saque(valor);
+			return false;
 		}
 	}
 
@@ -233,23 +244,50 @@ public class DaoConta {
 		}
 	}
 
-	public void salvaSaldoContaTxt(Integer numeroConta, String cliente, BigDecimal saldo){
+	public void salvaSaldoContaTxt(Integer numeroConta) {
 		try {
-			
-			FileWriter arq = new FileWriter(cliente+"."+numeroConta+"."+".txt"); 
+			Conta conta = this.listaContas.get(numeroConta);
+			FileWriter arq = new FileWriter(conta.getCliente() + "." + numeroConta + "."
+					+ ".txt");
 			PrintWriter grava = new PrintWriter(arq);
-			
-			grava.println("Conta: "+numeroConta);
-			grava.println("Cliente"+cliente);
-			grava.println("Saldo: "+saldo);
+
+			grava.println("Conta: " + numeroConta);
+			grava.println("Cliente" + conta.getCliente());
+			if(conta instanceof ContaPoupanca){
+				grava.println("Saldo: " + ((ContaPoupanca) conta).saldoAtualP());
+			}else{
+			grava.println("Saldo: " + conta.getSaldoAtual());
+			}
 			arq.close();
-			
+
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			 System.err.println("Arquivo não encontrado: "+e.getMessage());
+			System.err.println("Arquivo não encontrado: " + e.getMessage());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			  System.err.println("Erro na abertura do arquivo:"+cliente+"."+numeroConta+e.getMessage());
+			System.err.println("Erro na abertura do arquivo:" + "$#¨&*%."+numeroConta + e.getMessage());
+		}
+	}
+
+	public void getSaldoContaTxt(Integer numeroConta) {
+		Conta conta = this.listaContas.get(numeroConta);
+		FileReader arq;
+		try {
+			arq = new FileReader(conta.getCliente()+"."+numeroConta);
+			BufferedReader lerArq = new BufferedReader(arq);
+			String linha = lerArq.readLine();
+
+			while (linha != null) {
+				System.out.printf(linha);
+				linha = lerArq.readLine();
+			}
+
+			lerArq.close();
+
+		} catch (FileNotFoundException e) {
+			System.err.println("Erro: " + e.getMessage());
+		} catch (IOException e) {
+			System.err.println("Erro: " + e.getMessage());
 		}
 	}
 }
